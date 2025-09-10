@@ -15,6 +15,29 @@ stages:
         - task: tfsec@1
           inputs:
             version: 'v1.26.0'
+        - task: AzureCLI@2
+          inputs:
+            azureSubscription: 'LB-DEVOPS'
+            scriptType: 'bash'
+            scriptLocation: 'inlineScript'
+            inlineScript: |
+              - script: |
+                          curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
+        - task: AzureCLI@2
+          inputs:
+            azureSubscription: 'LB-DEVOPS'
+            scriptType: 'bash'
+            scriptLocation: 'inlineScript'
+            inlineScript: |
+              - script: |
+                          tfsec ./terraform
+
+
+
+
+
+
+            
   - stage: initplan
     displayName: init and plan
     jobs:
