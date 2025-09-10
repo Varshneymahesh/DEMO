@@ -67,4 +67,19 @@ stages:
             command: 'plan'
             workingDirectory: '$(System.DefaultWorkingDirectory)/env/dev'
             environmentServiceNameAzureRM: 'LB-DEVOPS'
-            environmentAzureRmOverrideSubscriptionID: '75146836-fdff-4091-9190-2ee9cca9c8b6'          
+            environmentAzureRmOverrideSubscriptionID: '75146836-fdff-4091-9190-2ee9cca9c8b6'   
+
+
+  - stage: prvalidation
+    displayName: pr
+    dependsOn: initplan
+    jobs:
+      - job: prvalidate
+        pool: server
+        steps:
+        - task: ManualValidation@1
+      
+          inputs:
+            notifyUsers: 'Mahesh.chandra1985@outlook.com'
+            approvers: 'Mahesh.chandra1985@outlook.com'
+          
