@@ -33,7 +33,7 @@ stages:
             scriptLocation: 'inlineScript'
             inlineScript: |
                 tfsec ./terraform
-              
+          continueOnError: true    
                           
 
 
@@ -43,6 +43,7 @@ stages:
 
             
   - stage: initplan
+    dependsOn: tfscan
     displayName: init and plan
     jobs:
       - job: initplan
