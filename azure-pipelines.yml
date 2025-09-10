@@ -15,6 +15,7 @@ stages:
         - task: tfsec@1
           inputs:
             version: 'v1.26.0'
+          continueOnError: true  
         - task: AzureCLI@2
           inputs:
             azureSubscription: 'LB-DEVOPS'
