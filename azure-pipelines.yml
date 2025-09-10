@@ -2,8 +2,8 @@
 
 trigger: none
 
-pool:
-  vmImage: mylbpool
+pool: mylbpool
+   
 
 stages:
   - stage: initplan
