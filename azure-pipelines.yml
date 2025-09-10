@@ -6,6 +6,15 @@ pool: mylbpool
    
 
 stages:
+  - stage: tfscan
+    displayName: tfscan
+    jobs:
+      - job: tfscan
+        displayName: tfscan
+        steps:
+        - task: tfsec@1
+          inputs:
+            version: 'v1.26.0'
   - stage: initplan
     displayName: init and plan
     jobs:
@@ -29,4 +38,4 @@ stages:
             command: 'plan'
             workingDirectory: '$(System.DefaultWorkingDirectory)/env/dev'
             environmentServiceNameAzureRM: 'LB-DEVOPS'
-            environmentAzureRmOverrideSubscriptionID: '75146836-fdff-4091-9190-2ee9cca9c8b6'
+            environmentAzureRmOverrideSubscriptionID: '75146836-fdff-4091-9190-2ee9cca9c8b6'          
