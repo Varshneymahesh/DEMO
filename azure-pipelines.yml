@@ -82,4 +82,29 @@ stages:
           inputs:
             notifyUsers: 'Mahesh.chandra1985@outlook.com'
             approvers: 'Mahesh.chandra1985@outlook.com'
-          
+  - stage: terraformapply
+    displayName: apply and init
+    dependsOn: prvalidation
+    jobs:
+      - job: intapply
+        displayName: init and apply
+        steps:
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/env/dev'
+            backendServiceArm: 'LB-DEVOPS'
+            backendAzureRmOverrideSubscriptionID: '75146836-fdff-4091-9190-2ee9cca9c8b6'
+            backendAzureRmResourceGroupName: 'shree'
+            backendAzureRmStorageAccountName: 'stglb001'
+            backendAzureRmContainerName: 'lbcon'
+            backendAzureRmKey: 'tf.stetefile'
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'apply'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/env/dev'
+            commandOptions: '--auto-approve'
+            environmentServiceNameAzureRM: 'LB-DEVOPS'
+            environmentAzureRmOverrideSubscriptionID: '75146836-fdff-4091-9190-2ee9cca9c8b6'
