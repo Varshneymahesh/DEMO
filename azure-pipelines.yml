@@ -1,0 +1,32 @@
+
+
+trigger: none
+
+pool:
+  vmImage: mylbpool
+
+stages:
+  - stage: initplan
+    displayName: init and plan
+    jobs:
+      - job: initplan
+        displayName: init and plan
+        steps:
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/env/dev'
+            backendServiceArm: 'LB-DEVOPS'
+            backendAzureRmOverrideSubscriptionID: '75146836-fdff-4091-9190-2ee9cca9c8b6'
+            backendAzureRmResourceGroupName: 'shree'
+            backendAzureRmStorageAccountName: 'stglb001'
+            backendAzureRmContainerName: 'lbcon'
+            backendAzureRmKey: 'tf.stetefile'
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'plan'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/env/dev'
+            environmentServiceNameAzureRM: 'LB-DEVOPS'
+            environmentAzureRmOverrideSubscriptionID: '75146836-fdff-4091-9190-2ee9cca9c8b6'
